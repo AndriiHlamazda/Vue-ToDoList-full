@@ -87,8 +87,6 @@
           },
         });
         this.tasks.push(result.data.createTask);
-        const date = Date.now();
-        console.log('data', date);
       },
 
 
