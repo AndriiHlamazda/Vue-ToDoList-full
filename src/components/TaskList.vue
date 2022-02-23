@@ -6,6 +6,7 @@
       :task="task"
       @complete-task="completeTask"
       @delete-task="deleteTask"
+      @update-task="updateTask"
     />
   </div>
 </template>
@@ -30,6 +31,9 @@
       deleteTask(id) {
         this.$emit('delete-task', id)
       },
+      updateTask(id, title) {
+        this.$emit('update-task', id, title);
+      }
     },
   }
 </script>

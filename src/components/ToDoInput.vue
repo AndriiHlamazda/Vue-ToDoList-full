@@ -11,6 +11,7 @@
 </template>
 
 <script>
+
   export default {
     name: 'ToDoInput',
 
@@ -31,8 +32,10 @@
 
     methods: {
       addTask() {
-        this.$emit('create-task', this.newTask)
+        if (this.newTask !== '') {
+        this.$emit('create-task', this.newTask);
         this.newTask = ''
+        }
       }
     }
   }

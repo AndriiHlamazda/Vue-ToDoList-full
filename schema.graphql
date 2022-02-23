@@ -1,0 +1,29 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Mutation {
+    createTask(createTaskInput: CreateTaskInput!): Task!
+    deleteTask(id: String!): Task!
+    updateTaskStatus(isDone: Boolean!, id: String!): Task!
+    updateTask(createTaskInput: CreateTaskInput!, id: String!): Task!
+    clearTask: [Task!]!
+}
+
+type Query {
+    tasks: [Task!]!
+}
+
+type Task {
+    id: ID!
+    isDone: Boolean!
+    mode: Boolean!
+    title: String!
+}
+
+input CreateTaskInput {
+    title: String!
+}

@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-between my-4">
     <p class="score"
-       id="todosLeft"> {{ counter }} </p>
+       id="left"> {{ counter }} </p>
     <p class="hover:text-purple-600"
        @click="AllClearTasks">
       Clear Completed</p>
@@ -10,7 +10,7 @@
 
 <script>
   export default {
-    name: 'Controls',
+    name: 'ControlsTask',
     props: {
       tasks: {
         type: Array,
@@ -22,9 +22,11 @@
       completedTasks() {
         return this.tasks.filter(task => task.isDone === true);
       },
+
       activeTasks() {
         return this.tasks.filter(task => task.isDone === false);
       },
+
       counter() {
         let interest = Math.floor(this.completedTasks.length / this.tasks.length * 100);
         if (this.tasks.length !== 0) {

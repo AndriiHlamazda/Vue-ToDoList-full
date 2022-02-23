@@ -5,23 +5,26 @@
   >
     <div class="flex justify-between items-center">
       <input
-        @click="CompleteTask"
+        @click="completeTask"
         type="checkbox"
         class="transform scale-150"
-        :checked="isDone"
+        :checked="task.isDone"
       >
-      <span v-if="mode"
-            class="ml-2"
-            :class="{ [`line-through text-gray-500`]: isDone }"
-            @dblclick="editTitleMode"
-            >
-             {{ task.title }}</span>
-      <input v-else
-             v-model="task.title"
-             type="text"
-             @keyup.enter ="saveTitleMode"
-             class="outline-none ml-2"
-             v-focus
+      <span
+        v-if="mode"
+        class="ml-2"
+        :class="{ [`line-through text-gray-500`]: task.isDone }"
+        @dblclick="editTitleMode"
+      >
+        {{ task.title }}
+      </span>
+      <input
+        v-else
+        v-focus
+        v-model="title"
+        type="text"
+        @keyup.enter ="updateTask"
+        class="outline-none ml-2"
       >
     </div>
     <i class="material-icons"
@@ -29,20 +32,21 @@
       clear
     </i>
   </li>
-  <Modal :task="task"
-         v-if="isInfoModal"
-         @delete-task="deleteTask"
-         @close-modal="closeModal"
+  <ModalTask
+    :task="task"
+    v-if="isInfoModal"
+    @delete-task="deleteTask"
+    @close-modal="closeModal"
   />
   </div>
 </template>
 
 <script>
-  import Modal from './Modal';
+    import ModalTask from './Modal'
 
   export default {
     name: 'TaskListItem',
-    components: {Modal},
+    components: {ModalTask},
     props: {
       task: {
         type: Object,
@@ -51,12 +55,11 @@
       },
     },
 
-    data() {
+    data(vm) {
       return {
-        id: this.task.id,
-        isDone: this.task.isDone,
         isInfoModal: false,
-        mode: this.task.mode,
+        mode: true,
+        title: vm.task.title,
       }
     },
 
@@ -64,20 +67,23 @@
       closeModal() {
         this.isInfoModal = false;
       },
-      CompleteTask() {
-        this.$emit('complete-task', this.id)
+      completeTask() {
+        this.$emit('complete-task', this.task.id)
       },
       deleteTask() {
-        this.$emit('delete-task', this.id)
+        this.$emit('delete-task', this.task.id)
       },
       editTitleMode() {
         if (this.task.isDone !== true) {
           this.mode = false;
         }
       },
-      saveTitleMode() {
-        this.mode = true;
+
+      updateTask() {
+       this.$emit('update-task', this.task.id, this.title);
+       this.mode = true;
       },
+
       modalShow() {
         this.isInfoModal = true;
       },
@@ -94,3 +100,4 @@
 
   }
 </script>
+

@@ -1,0 +1,16 @@
+{
+  "name": "ToDoList GraphQL Schema",
+  "schemaPath": "./schema.graphql",
+  "includes": [ "*.gql" ],
+  "extensions": {
+    "endpoints": {
+      "Local GraphQL Endpoint": {
+        "url": "http://127.0.0.1:3010/graphql",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": true
+      }
+    }
+  }
+}
