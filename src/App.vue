@@ -54,6 +54,7 @@
       tasks: gql`query {
         tasks {
           id
+          order
           title
           isDone
         }
@@ -67,7 +68,10 @@
       },
 
       activeTasks() {
-        return this.tasks.filter(task => !task.isDone);
+        return this.tasks.sort(function(a, b) {
+          const dateA = new Date(a.order), dateB = new Date(b.order);
+          return dateA-dateB;
+        }).filter(task => !task.isDone);
       },
     },
 
@@ -80,6 +84,7 @@
               id
               title
               isDone
+              order
               }
             }`,
           variables: {
@@ -91,7 +96,6 @@
 
 
       async updateTaskStatus(id) {
-        console.log('updateTaskStatus');
         const task = this.tasks.find(task => task.id === id);
         const result = await this.$apollo.mutate({
           mutation: gql`mutation ($id: String!, $isDone: Boolean!) {
@@ -119,6 +123,7 @@
             mutation: gql`mutation ($id: String!, $label: String!) {
              updateTask(createTaskInput: {title: $label} id: $id) {
                title
+               id
              }
            }`,
             variables: {
@@ -127,7 +132,7 @@
             },
           });
           tasks[index].title = updateTask.title;
-          this.tasks = tasks;
+         // this.tasks = tasks;
         }
       },
 
@@ -152,17 +157,16 @@
           if (compTask.length !== 0) {
             const result = await this.$apollo.mutate({
               mutation: gql`mutation {
-            clearTask {
-            id
-            title
-            isDone
-            mode
-            }
-          }`
+                clearTask {
+                 id
+                 title
+                 isDone
+                 mode
+                 }
+              }`
             });
             this.tasks = result.data.clearTask;
           }
-
       }
     },
   }

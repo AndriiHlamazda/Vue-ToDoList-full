@@ -19,6 +19,7 @@ type Query {
 
 type Task {
     id: ID!
+    order: String!
     isDone: Boolean!
     mode: Boolean!
     title: String!
