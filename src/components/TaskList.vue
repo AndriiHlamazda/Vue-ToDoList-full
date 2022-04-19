@@ -12,28 +12,28 @@
 </template>
 
 <script>
-  import TaskListItem from './TaskListItem';
+import TaskListItem from './TaskListItem';
 
-  export default {
-    name: 'TaskList',
-    components: {TaskListItem},
-    props: {
-      tasks: {
-        type: Array,
-        default: () => [],
-      },
+export default {
+  name: 'TaskList',
+  components: { TaskListItem },
+  props: {
+    tasks: {
+      type: Array,
+      default: () => [],
     },
+  },
 
-    methods: {
-      completeTask(id) {
-        this.$emit('complete-task', id)
-      },
-      deleteTask(id) {
-        this.$emit('delete-task', id)
-      },
-      updateTask(id, title) {
-        this.$emit('update-task', id, title);
-      }
+  methods: {
+    completeTask(id) {
+      this.$emit('complete-task', id);
     },
-  }
+    deleteTask(id) {
+      this.$emit('delete-task', id);
+    },
+    updateTask(id, title) {
+      this.$emit('update-task', id, title);
+    },
+  },
+};
 </script>
